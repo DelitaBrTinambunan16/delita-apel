@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'DelitaOpensans';
+    src: url('assets/fonts/OpenSans-VariableFont_wdth,wght.ttf');
+}
+
+.font-custom{
+    font-family: 'DelitaOpensans';
+}

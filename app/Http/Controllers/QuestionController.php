@@ -44,7 +44,9 @@ class QuestionController extends Controller
         ]);
 
 
-      return view('home-question-respon', $data);
+      //return view('home-question-respon', $data);
+      return redirect()->route('home')->with('info', 'Terimakasih <b>'.$data['nama']. 'Pertanyaan sudah terinput silahkan cek email <b>'
+      .$data['email'].'</b>');
     }
 
     /**
