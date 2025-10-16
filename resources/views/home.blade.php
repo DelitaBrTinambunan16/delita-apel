@@ -57,9 +57,10 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-           <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
             <a class="navbar-brand" href="#">My Laravel App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -84,8 +85,8 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1 class="display-6 mb-2 font-custom">{{$username}}</h1>
-            <p class="lead mb-0">{{$last_login}}</p>
+            <h1 class="display-6 mb-2 font-custom">{{ $username }}</h1>
+            <p class="lead mb-0">{{ $last_login }}</p>
         </div>
     </section>
 
@@ -97,7 +98,9 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">About Our Application</h5>
-                        <p class="card-text">Our application provides a clean and intuitive interface, allowing users to navigate easily and perform tasks efficiently. Built with Laravel and Bootstrap, it offers flexibility and responsiveness.</p>
+                        <p class="card-text">Our application provides a clean and intuitive interface, allowing users to
+                            navigate easily and perform tasks efficiently. Built with Laravel and Bootstrap, it offers
+                            flexibility and responsiveness.</p>
                         <a href="#" class="btn btn-primary">Explore More</a>
                     </div>
                 </div>
@@ -106,11 +109,13 @@
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne">
                                 About Us
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div id="collapseOne" class="accordion-collapse collapse show"
+                            data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 We are a tech company that specializes in web development solutions.
                             </div>
@@ -118,7 +123,8 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo">
                                 Our Services
                             </button>
                         </h2>
@@ -141,7 +147,8 @@
                         </div>
                         <ul class="list-group mb-3">
                             @foreach ($list_pendidikan as $item)
-                            <li class="list-group-item">{{$item}}</li></li>
+                                <li class="list-group-item">{{ $item }}</li>
+                                </li>
                             @endforeach
 
                         </ul>
@@ -157,116 +164,124 @@
 
             <div class="col-md-6">
                 <div class="card">
-    <div class="card-body">
-        <h5 class="card-title">Form Pertanyaan</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">Form Pertanyaan</h5>
 
-        {{--Info session--}}
-        @if (session('info'))
-    <div class="alert alert-info">
-        {!! session('info') !!}
-    </div>
-@endif
+                        {{-- Info session --}}
+                        @if (session('create'))
+                            <div class="alert alert-info">
+                                {!! session('info') !!}
+                            </div>
+                        @endif
+                        
+                        {{-- Info session --}}
+                        @if (session('update'))
+                            <div class="alert alert-info">
+                                {!! session('info') !!}
+                            </div>
+                        @endif
 
-        {{--Form Pertanyaan--}}
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                {{--Info error--}}
-                @foreach ( $errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+                        {{-- Form Pertanyaan --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    {{-- Info error --}}
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('question.store') }}" method="POST">
+                            @csrf
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control"name="nama" value="{{ old('nama') }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control"name="email" value="{{ old('email') }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pertanyaan" class="form-label">Pertanyaan</label>
+                        <textarea class="form-control" rows="4"name="pertanyaan" rows="4">{{ old('pertanyaan') }}</textarea>></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kirim Pertanyaan</button>
+                    </form>
+                </div>
+            </div>
+            {{-- Alerts --}}
+            <div class="card ">
+                <div class="card-body">
+                    <h3 class="h5 mb-3">Alerts</h3>
+                    <div class="alert alert-primary mb-2">Informational alert</div>
+                    <div class="alert alert-success mb-2">Success alert</div>
+                    <div class="alert alert-warning mb-2">Warning alert</div>
+                    <div class="alert alert-danger mb-0">Danger alert</div>
+                </div>
+            </div>
+
+            {{-- Buttons --}}
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="h5 mb-3">Buttons</h3>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-primary">Primary</button>
+                        <button class="btn btn-secondary">Secondary</button>
+                        <button class="btn btn-outline-primary">Outline</button>
+                        <button class="btn btn-success">Success</button>
+                        <button class="btn btn-danger">Danger</button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Table --}}
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="h5 mb-3">Table</h3>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Ani</td>
+                                    <td>Admin</td>
+                                    <td><span class="badge text-bg-success">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Budi</td>
+                                    <td>User</td>
+                                    <td><span class="badge text-bg-secondary">Inactive</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Cici</td>
+                                    <td>Editor</td>
+                                    <td><span class="badge text-bg-warning">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-muted small mb-0">Tambahkan <code>.table-striped</code> atau
+                        <code>.table-bordered</code> sesuai kebutuhan.</p>
+                </div>
+            </div>
         </div>
-        @endif
-    <form action="{{ route('question.store') }}" method="POST">
-	@csrf
-                <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control"name="nama" value="{{old('nama')}}">
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control"name="email" value="{{old('email')}}">
-            </div>
-            <div class="mb-3">
-                <label for="pertanyaan" class="form-label">Pertanyaan</label>
-                <textarea class="form-control" rows="4"name="pertanyaan" rows="4">{{old('pertanyaan')}}</textarea>></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Kirim Pertanyaan</button>
-        </form>
-    </div>
-</div>
-                {{-- Alerts --}}
-                <div class="card ">
-                    <div class="card-body">
-                        <h3 class="h5 mb-3">Alerts</h3>
-                        <div class="alert alert-primary mb-2">Informational alert</div>
-                        <div class="alert alert-success mb-2">Success alert</div>
-                        <div class="alert alert-warning mb-2">Warning alert</div>
-                        <div class="alert alert-danger mb-0">Danger alert</div>
-                    </div>
-                </div>
-
-                {{-- Buttons --}}
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="h5 mb-3">Buttons</h3>
-                        <div class="d-flex flex-wrap gap-2">
-                            <button class="btn btn-primary">Primary</button>
-                            <button class="btn btn-secondary">Secondary</button>
-                            <button class="btn btn-outline-primary">Outline</button>
-                            <button class="btn btn-success">Success</button>
-                            <button class="btn btn-danger">Danger</button>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Table --}}
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="h5 mb-3">Table</h3>
-                        <div class="table-responsive">
-                            <table class="table align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Ani</td>
-                                        <td>Admin</td>
-                                        <td><span class="badge text-bg-success">Active</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Budi</td>
-                                        <td>User</td>
-                                        <td><span class="badge text-bg-secondary">Inactive</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Cici</td>
-                                        <td>Editor</td>
-                                        <td><span class="badge text-bg-warning">Pending</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p class="text-muted small mb-0">Tambahkan <code>.table-striped</code> atau <code>.table-bordered</code> sesuai kebutuhan.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; {{date('Y')}} My Laravel App. All Rights Reserved.</p>
+            <p>&copy; {{ date('Y') }} My Laravel App. All Rights Reserved.</p>
         </div>
     </footer>
 
