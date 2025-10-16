@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\PelangganController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -41,3 +42,7 @@ Route::get('/about', function () {
 
         route::get('dashboard', [DashboardController::class, 'index' ])
         ->name('dashboard');
+
+Route::resource('pelanggan', PelangganController::class);
+
+
