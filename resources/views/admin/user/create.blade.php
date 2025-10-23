@@ -15,7 +15,7 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#">Pelanggan</a></li>
+                    <li class="breadcrumb-item"><a href="#">User</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
                 </ol>
             </nav>
