@@ -44,6 +44,8 @@ Route::get('/about', function () {
         route::get('dashboard', [DashboardController::class, 'index' ])
         ->name('dashboard');
 
+Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
 Route::resource('pelanggan', PelangganController::class);
 
 Route::resource('user', UserController::class);
