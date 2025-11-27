@@ -1,100 +1,137 @@
 @extends('layouts.admin.app')
 
 @section('content')
-        <div class="py-4">
-            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                </path>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item"><a href="#">Pelanggan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit Pelanggan</li>
-                </ol>
-            </nav>
-            <div class="d-flex justify-content-between w-100 flex-wrap">
-                <div class="mb-3 mb-lg-0">
-                    <h1 class="h4">Edit Pelanggan</h1>
-                    <p class="mb-0">Form untuk mengedit data pelanggan baru.</p>
-                </div>
-                <div>
-                    <a href="{{ route('pelanggan.index') }}" class="btn btn-primary"><i class="far fa-question-circle me-1"></i> Kembali</a>
-                </div>
+    <div class="container">
+        <h3>Edit Pelanggan</h3>
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        {{-- Form Edit Pelanggan --}}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Edit Informasi Pelanggan</h5>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12 mb-4">
-                <div class="card border-0 shadow components-section">
-                    <div class="card-body">
-                        <form action="{{ route('pelanggan.update', $dataPelanggan->pelanggan_id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="row mb-4">
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- First Name -->
-                                    <div class="mb-3">
-                                        <label for="first_name" class="form-label">First name</label>
-                                        <input type="text" name="first_name" id="first_name" class="form-control" required value="{{ $dataPelanggan->first_name }}">
-                                    </div>
-
-                                    <!-- Last Name -->
-                                    <div class="mb-3">
-                                        <label for="last_name" class="form-label">Last name</label>
-                                        <input type="text" name="last_name" id="last_name" class="form-control" required value="{{ $dataPelanggan->last_name }}">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Birthday -->
-                                    <div class="mb-3">
-                                        <label for="birthday" class="form-label">Birthday</label>
-                                        <input type="date" name="birthday" id="birthday" class="form-control" value="{{ $dataPelanggan->birthday }}">
-                                    </div>
-
-                                    <!-- Gender -->
-                                    <div class="mb-3">
-                                        <label for="gender" class="form-label">Gender</label>
-                                        <select id="gender" name="gender" class="form-select">
-                                            <option value="">Gender</option>
-                                            <option value="Male"  {{ $dataPelanggan->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                                            <option value="Female" {{ $dataPelanggan->gender == 'Female' ? 'selected' : '' }}>Female</option>
-                                            <option value="Other" {{ $dataPelanggan->gender == 'Other' ? 'selected' : '' }}>Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-sm-12">
-                                    <!-- Email -->
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="text" name="email" id="email" class="form-control" required value="{{ $dataPelanggan->email }}">
-                                    </div>
-
-                                    <!-- Phone -->
-                                    <div class="mb-3">
-                                        <label for="phone" class="form-label">Phone</label>
-                                        <input type="text" name="phone" id="phone" class="form-control" value="{{ $dataPelanggan->phone }}">
-                                    </div>
-
-                                    <!-- Buttons -->
-                                    <div class="">
-                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                        <a href="{{ route('pelanggan.index') }}"
-                                            class="btn btn-outline-secondary ms-2">Batal</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+            <div class="card-body">
+                <form action="{{ route('pelanggan.update', $dataPelanggan->pelanggan_id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" name="first_name" id="first_name" value="{{ $dataPelanggan->first_name }}"
+                            class="form-control @error('first_name') is-invalid @enderror">
+                        @error('first_name')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
-
-                </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" name="last_name" id="last_name" value="{{ $dataPelanggan->last_name }}"
+                            class="form-control @error('last_name') is-invalid @enderror">
+                        @error('last_name')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" id="email" value="{{ $dataPelanggan->email }}"
+                            class="form-control @error('email') is-invalid @enderror">
+                        @error('email')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="text" name="phone" id="phone" value="{{ $dataPelanggan->phone ?? '' }}"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select name="gender" id="gender" class="form-select @error('gender') is-invalid @enderror">
+                            <option value="">Pilih Gender</option>
+                            <option value="Pria" {{ $dataPelanggan->gender == 'Pria' ? 'selected' : '' }}>Pria</option>
+                            <option value="Wanita" {{ $dataPelanggan->gender == 'Wanita' ? 'selected' : '' }}>Wanita
+                            </option>
+                            <option value="Lain-lain" {{ $dataPelanggan->gender == 'Lain-lain' ? 'selected' : '' }}>
+                                Lain-lain</option>
+                        </select>
+                        @error('gender')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="birthday" class="form-label">Birthday</label>
+                        <input type="date" name="birthday" id="birthday" value="{{ $dataPelanggan->birthday ?? '' }}"
+                            class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">Batal</a>
+                </form>
             </div>
         </div>
+
+        {{-- Form Upload File --}}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Tambah File Baru</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('pelanggan.files.store', $dataPelanggan->pelanggan_id) }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="files" class="form-label">Pilih File</label>
+                        <input type="file" name="files[]" id="files" class="form-control" multiple
+                            accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt">
+                        <small class="text-muted">Format: JPG, JPEG, PNG, PDF, DOC, DOCX, TXT (Max: 2MB per file)</small>
+                    </div>
+                    <button type="submit" class="btn btn-success">Upload File</button>
+                </form>
+                @if ($errors->any())
+                    <div class="alert alert-danger mt-3">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- List Files --}}
+        <div class="card">
+            <div class="card-header">
+                <h5>Daftar File</h5>
+            </div>
+            <div class="card-body">
+                @if ($files->count() > 0)
+                    <ul class="list-group">
+                        @foreach ($files as $file)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <a href="{{ asset('storage/uploads/' . $file->filename) }}" target="_blank"
+                                        class="text-decoration-none">
+                                        📄 {{ $file->filename }}
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">Uploaded:
+                                        {{ $file->created_at->format('d-m-Y H:i') }}</small>
+                                </div>
+                                <form action="{{ route('pelanggan.files.destroy', $file->id) }}" method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus file ini?');" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">Hapus</button>
+                                </form>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="text-muted">Tidak ada file yang di-upload.</p>
+                @endif
+            </div>
+        </div>
+    </div>
 @endsection

@@ -1,84 +1,71 @@
 @extends('layouts.admin.app')
 
 @section('content')
-
-        <div class="py-4">
-            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                </path>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item"><a href="#">user</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
-                </ol>
-            </nav>
-            <div class="d-flex justify-content-between w-100 flex-wrap">
-                <div class="mb-3 mb-lg-0">
-                    <h1 class="h4">Tambah User</h1>
-                    <p class="mb-0">Form untuk menambahkan data User.</p>
-                </div>
-                <div>
-                    <a href="{{ route('user.index') }}" class="btn btn-primary"><i class="far fa-question-circle me-1"></i> Kembali</a>
-                </div>
-            </div>
+<div class="py-4">
+    <div class="d-flex justify-content-between w-100 flex-wrap mb-3">
+        <div>
+            <h1 class="h4">Edit User</h1>
         </div>
+        <div>
+            <a href="{{ route('user.index') }}" class="btn btn-primary">Kembali</a>
+        </div>
+    </div>
 
-        <div class="row">
-            <div class="col-12 mb-4">
-                <div class="card border-0 shadow components-section">
-                    <div class="card-body">
-                        <form action="{{ route('user.store') }}" method="POST">
-                            @csrf
-                            <div class="row mb-4">
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- First Name -->
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">name</label>
-                                        <input type="text" name="name" id="name" class="form-control" required>
-                                    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card border-0 shadow mb-4">
+                <div class="card-body">
 
-                                    <!-- email -->
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">email</label>
-                                        <input type="email" name="email" id="email" class="form-control" required>
-                                    </div>
-                                </div>
+                    <form action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
 
-                                <div class="col-lg-4 col-sm-12">
+                        {{-- Foto Profil --}}
+                        <div class="mb-3 text-center">
+                            <img src="{{ $user->profile_picture && file_exists(storage_path('app/public/photos/' . $user->profile_picture))
+                                        ? asset('storage/photos/' . $user->profile_picture)
+                                        : 'https://via.placeholder.com/120' }}"
+                                 width="120" height="120" class="rounded-circle mb-2" alt="Foto Profil">
 
-                                    <!-- Password -->
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input type="password" name="password" id="password" class="form-control">
-                                    </div>
+                            <input type="file" name="profile_picture" class="form-control mt-2">
+                            @error('profile_picture')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
 
-                                    {{-- confirm Password --}}
-                                    <div class="mb-3">
-                                        <label for="password_confirmation" class="form-label">Confirm Password</label>
-                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
-                                    </div>
+                        {{-- Nama --}}
+                        <div class="mb-3">
+                            <label>Nama</label>
+                            <input type="text" name="name" class="form-control" value="{{ $user->name }}">
+                            @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
 
-                                    <!-- Buttons -->
-                                    <div class="">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                        <a href="{{ route('user.index') }}"
-                                            class="btn btn-outline-secondary ms-2">Batal</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                        {{-- Email --}}
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ $user->email }}">
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        {{-- Password --}}
+                        <div class="mb-3">
+                            <label>Password (Kosongkan jika tidak ingin mengganti)</label>
+                            <input type="password" name="password" class="form-control">
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Update User</button>
+                    </form>
 
                 </div>
             </div>
         </div>
+    </div>
+</div>
 @endsection
-
-

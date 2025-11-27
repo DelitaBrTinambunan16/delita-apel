@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\User;
@@ -13,11 +12,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Run factory example
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
+            'name'  => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        // Also run individual seeders so `php artisan db:seed` executes them.
+        $this->call([
+            CreateFirstUser::class,
+            CreatePelangganDummy::class,
         ]);
     }
 }
